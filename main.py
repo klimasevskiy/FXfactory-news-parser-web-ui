@@ -98,11 +98,11 @@ def filter_data(api_key, db_id, data, response, impact, currency, hours_shift):
         page_ids.append(response['id'])
     return page_ids
 
-def create_pages_and_return_list_of_ids(api_key, db_id, impact, currency):
+def create_pages_and_return_list_of_ids(api_key, db_id, impact, currency, hours_shift):
     notion = connect(api_key)
     response = notion.databases.retrieve(db_id)
     title = response['title'][0]['text']['content']
-    page_ids = filter_data(api_key, db_id, sc.fetch_forex_factory_economic_calendar(), response, impact, currency)
+    page_ids = filter_data(api_key, db_id, sc.fetch_forex_factory_economic_calendar(), response, impact, currency, hours_shift)
     return page_ids
 
 def get_page_name(api_key, id):
