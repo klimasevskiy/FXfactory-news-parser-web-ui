@@ -1,14 +1,14 @@
 from notion_client import Client
 import configparser
 import scrapper as sc
-from datetime import datetime
+from datetime import datetime, timedelta
 import pytz
 
 def connect(api_key):
     notion = Client(auth=api_key)
     return notion
 
-def filter_data(api_key, db_id, data, response, impact, currency):
+def filter_data(api_key, db_id, data, response, impact, currency, hours_shift):
     notion = connect(api_key)
     page_ids = []
     impact_new=[]
@@ -26,6 +26,7 @@ def filter_data(api_key, db_id, data, response, impact, currency):
         if event['impact'] in impact_new:
             if event['currency'] in currency:
                 date_object = datetime.strptime(event['datetime'], "%Y.%m.%d %H:%M")
+                date_object += timedelta(hours=hours_shift)
                 city_timezone = pytz.timezone('Europe/Kiev')
                 localized_date_object = city_timezone.localize(date_object)
                 iso_date_string = localized_date_object.strftime("%Y-%m-%dT%H:%M%z")

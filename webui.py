@@ -85,11 +85,18 @@ try:
 except:
     st.session_state.is_usd = False
 
+try:
+    print(st.session_state.days_add)
+except:
+    st.session_state.days_add = 7
+
 def save_settings():
     if not st.session_state.token:
         st.session_state.token = 'xxx'
     if not st.session_state.db_id:
         st.session_state.db_id = 'xxx'
+    if not st.session_state.days_add:
+        st.session_state.days_add = 7
     impact_list = []
     if st.session_state.is_yellow:
         impact_list.append("yellow")
@@ -127,6 +134,7 @@ def load_tabs():
             st.text_input(label="DB Id:", type="password", value=st.session_state.db_id, key='db_id')
         with data_settings:
                 col1, col2 = st.columns(2)
+                st.number_input(label="Hours Shift:", value=st.session_state.days_add, key='days_add')
                 with col1:
                     st.subheader("Impact")
                     st.checkbox("🟡", value=st.session_state.is_yellow, key='is_yellow')
@@ -156,5 +164,5 @@ def load_tabs():
                                        currency({st.session_state.currency_filter}).  
                                        Now you can parse data to notion''', icon="✅")
         if parse_data:
-            ids = backend.create_pages_and_return_list_of_ids(st.session_state.token, st.session_state.db_id, st.session_state.impact_filter, st.session_state.currency_filter)
+            ids = backend.create_pages_and_return_list_of_ids(st.session_state.token, st.session_state.db_id, st.session_state.impact_filter, st.session_state.currency_filter, st.session_state.day_add)
 load_tabs()
