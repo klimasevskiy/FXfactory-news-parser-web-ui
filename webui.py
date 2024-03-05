@@ -165,4 +165,6 @@ def load_tabs():
                                        Now you can parse data to notion''', icon="✅")
         if parse_data:
             ids = backend.create_pages_and_return_list_of_ids(st.session_state.token, st.session_state.db_id, st.session_state.impact_filter, st.session_state.currency_filter, st.session_state.days_add)
+        st.success('''Author: https://github.com/klimasevskiy  
+                      How to use: https://youtu.be/6Fr4sdUvYPs''', icon='🙃')
 load_tabs()
