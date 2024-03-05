@@ -54,11 +54,15 @@ def fetch_forex_factory_economic_calendar():
                     pre_date = date
                 except Exception as e:
                     date = pre_date
-                time = ampm_to_24(row.find("td", class_="calendar__time").text.strip())
-                if time != "":
-                    pre_time = time
-                elif time == "":
-                    time = pre_time
+                try:
+                    time = ampm_to_24(row.find("td", class_="calendar__time").text.strip())
+                    if time != "":
+                        pre_time = time
+                    elif time == "":
+                        time = pre_time
+                except:
+                    time = None
+                    pre_time = None
                 datetime = date + " " + time
                 currency = row.find("td", class_="calendar__currency").text.strip()
                 impact = row.find("td", class_="calendar__impact").find("span")["class"][1]
