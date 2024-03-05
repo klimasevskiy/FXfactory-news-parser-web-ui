@@ -55,17 +55,14 @@ def fetch_forex_factory_economic_calendar():
                 except Exception as e:
                     date = pre_date
                 try:
-                    if time == "":
+                    time = row.find("td", class_="calendar__time").text.strip()
+                    time = ampm_to_24(time)
+                    if time != "":
+                        pre_time = time
+                    elif time == "":
                         time = pre_time
-                    else:
-                        time = ampm_to_24(row.find("td", class_="calendar__time").text.strip())
-                        if time != "":
-                            pre_time = time
-                        elif time == "":
-                            time = pre_time
                 except:
-                    time = None
-                    pre_time = None
+                    time = pre_time
                 datetime = date + " " + time
                 currency = row.find("td", class_="calendar__currency").text.strip()
                 impact = row.find("td", class_="calendar__impact").find("span")["class"][1]
@@ -105,4 +102,4 @@ def fetch_forex_factory_economic_calendar():
 #for row in data:
 #    print(f"{row['impact']} | {row['date']} | {row['time']} | {row['currency']} | {row['description']} | {row['actual']} | {row['forecast']} | {row['previous']}")
 
-#print(tabulate(data, headers="keys", tablefmt="pretty"))
+#print(tabulate(fetch_forex_factory_economic_calendar(), headers="keys", tablefmt="pretty"))
