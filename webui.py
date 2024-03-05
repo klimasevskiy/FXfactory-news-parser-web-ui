@@ -164,5 +164,5 @@ def load_tabs():
                                        currency({st.session_state.currency_filter}).  
                                        Now you can parse data to notion''', icon="✅")
         if parse_data:
-            ids = backend.create_pages_and_return_list_of_ids(st.session_state.token, st.session_state.db_id, st.session_state.impact_filter, st.session_state.currency_filter, st.session_state.day_add)
+            ids = backend.create_pages_and_return_list_of_ids(st.session_state.token, st.session_state.db_id, st.session_state.impact_filter, st.session_state.currency_filter, st.session_state.days_add)
 load_tabs()
